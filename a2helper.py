@@ -1,3 +1,23 @@
+"""
+首先你要理解一个桥的数据是长什么样的
+[1: COLUMN_ID, 
+ 2: COLUMN_NAME,
+ 3: COLUMN_HIGHWAY,
+ 4. COLUMN_LAT, 
+ 5. COLUMN_LON, 
+ 6. COLUMN_YEAR_BUILT, 
+ 7. COLUMN_LAST_MAJOR_REHAB, 
+ 8. COLUMN_LAST_MINOR_REHAB, 
+ 9. COLUMN_NUM_SPANS,
+ 10. COLUMN_SPAN_DETAILS, 
+ 11. COLUMN_DECK_LENGTH, 
+ 12. COLUMN_LAST_INSPECTED,
+ 13. COLUMN_BCI]
+
+在COLUMN_BCI里包含两个list:[INDEX_BCI_YEARS,INDEX_BCI_SCORES]
+
+"""
+
 ################################################################################
 # Part 1 - Querying the data
 ################################################################################
