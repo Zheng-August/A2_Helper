@@ -1,6 +1,3 @@
-import csv
-import math
-
 ################################################################################
 # Part 1 - Querying the data
 ################################################################################
@@ -8,14 +5,8 @@ def find_bridge_by_id(bridges: list[list], bridge_id: int) -> list:
     """
     从桥梁列表中查找指定ID的桥梁并返回其数据。
     """
-
-    # 1. 遍历bridges列表。
-    
-    # 2. 对于当前的桥梁，检查其ID是否与我们要查找的bridge_id匹配。
-    
-    # 3. 如果找到匹配的ID，返回当前的桥梁 注意 是整个桥梁 不是id。
-    
-    # 4. 如果遍历完所有桥梁都没有找到匹配的ID，返回一个空列表。
+    # hit: 遍历bridges列表 检查所有的桥梁中里面有没有和bridge_id一样的id，
+    # 如果有 那么返回桥梁的数据。如果没有 那么返回一个空列表 也就是 []
 
 
 def find_bridges_in_radius(bridges: list[list], lat: float, lon: float,
@@ -23,60 +14,27 @@ def find_bridges_in_radius(bridges: list[list], lat: float, lon: float,
     """
     返回位于给定经纬度半径内的桥梁的ID。
     """
-
-    # 1. 创建一个空列表来保存在指定半径内的桥梁ID。
-    
-    # 2. 遍历bridges列表。
-    
-    # 3. 对于当前桥梁，检查其ID是否在exclusions列表中。
-    #    如果在exclusions中，跳过当前桥梁，继续遍历下一个桥梁。
-    
-    # 4. 如果当前桥梁ID不在exclusions中，计算桥梁的位置(lat, lon)与给定位置(lat, lon)之间的距离。
-    #    提示: 可以用calculate_distance来计算距离
-    
-    # 5. 如果计算出的距离小于或等于给定的半径radius，将当前桥梁的ID添加到在指定半径内的桥梁ID列表中。
-    
-    # 6. 重复步骤3到5，直到遍历完所有桥梁。
-    
-    # 7. 返回在指定半径内的桥梁ID列表。
+    # hit: 首先你需要判定这个桥梁是否不在 ‘ exclusions ’ 里
+    # 可以用calculate_distance来计算距离
+    # 如果这个距离小于radius 那么这就是一个在半径内的桥梁
 
 
 def get_bridge_condition(bridges: list[list], bridge_id: int) -> float:
     """
     返回指定ID的桥梁的最近的BCI分数。
     """
-
-    # 1. 使用find_bridge_by_id函数找到指定ID的桥梁的信息。
-    
-    # 2. 检查找到的桥梁是否为空。
-    #    如果桥梁信息为空或桥梁的BCI分数为空，返回MISSING_BCI。
-    
-    # 3. 从桥梁的BCI分数列表中获取最近的BCI分数。
-    #    提示：您可以假设最近的BCI分数位于列表的最后一个位置。
-    
-    # 4. 如果找到的BCI分数大于0，返回该分数。
-    #    否则，返回MISSING_BCI。
+    # hit: 使用find_bridge_by_id
+    # 你不需要关心years 你只需要找scores里面最靠前并且非 MISSING_BCI 的数字
 
 
 def calculate_average_condition(bridge: list, start: int, stop: int) -> float:
     """
     返回在指定开始和结束年份之间的桥梁的平均BCI分数。
     """
-
-    # 1. 从桥梁数据中提取BCI年份和BCI分数列表。
-    # hit : years = bridge[COLUMN_BCI][INDEX_BCI_YEARS]
-    #       scores = bridge[COLUMN_BCI][INDEX_BCI_SCORES]
-
-    # 2. 初始化总分和计数器为0。这些将用于计算BCI分数的平均值。
-
-    # 3. 使用循环遍历BCI年份列表。
-    #    对于每一年，检查该年份是否在指定的开始和结束年份之间。
-    
-    # 4. 如果当前年份在指定的范围内，再检查该年份的BCI分数是否不等于MISSING_BCI。
-    #    如果BCI分数是有效的，将其加到总分上，并将计数器加1。
-    
-    # 5. 循环结束后，如果计数器大于0，计算BCI分数的平均值并返回。
-    #    否则，返回0.0。
+    # hit : 一座桥的COLUMN_BCI里的INDEX_BCI_YEARS是存储的所有年份
+    #       一座桥的COLUMN_BCI里的INDEX_BCI_SCORES是存储的所有年份
+    #       所有的year和scores是一一对应的 which means 只要year 
+    #       pass 那么相同index的scores就是你可以用的
 
 
 ################################################################################
@@ -93,15 +51,9 @@ def inspect_bridge(bridges: list[list], bridge_id: int, inspect_date: str,
     :param inspect_bci: 在inspect_date指定的年份中的桥梁的最新BCI分数。
     """
 
-    # 1. 使用循环遍历桥梁数据列表。
-    #   对于每个桥梁,检查其ID是否与指定的bridge_id匹配。
-    
-    # 2. 如果找到匹配的桥梁ID,更新该桥梁的最后检查日期为inspect_date。
-    
-    # 3. 从inspect_date中提取年份,并将这个年份插入到该桥梁的BCI年份列表的开头。
-    
-    # 4. 同样地,将inspect_bci插入到该桥梁的BCI分数列表的开头。
-    
+    #  不要使用calculate_distance来寻找正确桥梁 因为指针会不一样
+    #  从inspect_date中提取年份 也就是最后四位数
+    #  注意 这是更新的东西 所以不管在years里 还是在scores里都是应该加在list的开头
 
 
 def rehabilitate_bridge(bridges: list[list], bridge_ids: list[int],
@@ -114,16 +66,7 @@ def rehabilitate_bridge(bridges: list[list], bridge_ids: list[int],
     :param new_year: 新的修复日期。
     :param is_major: True:则更新主要修复日期 False:更新次要修复日期。
     """
-    #1. 使用循环遍历桥梁数据列表。
-    #   对于每个桥梁,检查其ID是否在bridge_ids中。
-    
-    #2. 如果找到匹配的桥梁ID,根据is_major的值决定更新哪个修复日期。
-    #   - 如果is_major为True,则更新主要修复日期为new_year。
-    #                     bridge[COLUMN_LAST_MAJOR_REHAB]
-    #   - 如果is_major为False,则更新次要修复日期为new_year。
-    #                      bridge[COLUMN_LAST_MINOR_REHAB] = new_year
-    
-                
+    #同样 不要使用calculate_distance来寻找正确桥梁 因为指针会不一样
 
 
 ################################################################################
@@ -138,24 +81,18 @@ def find_worst_bci(bridges: list[list], bridge_ids: list[int]) -> int:
     :param bridges: 桥梁数据的列表，每个桥梁的数据也是一个列表。
     :param bridge_ids: 需要检查的桥梁的ID列表。
     """
-    #1. 初始设置第一个桥梁ID为当前最差的桥梁,并获取其BCI分数。
-    #                     worst_id = bridge_ids[0]
-    #                      worst_bci = ......
-    #   这样可以确保在遍历其余的桥梁时始终有一个最差的桥梁和其BCI分数可供比较。
-
-    # 2. 使用循环遍历bridge_ids中的其余桥梁ID。
-    #   对于每个ID,使用`get_bridge_condition`函数获取其最新的BCI分数。
-    
-    #3. 比较当前桥梁的BCI分数与已知的最差BCI分数。
-    #                    if bci < worst_bci:
-    #   如果当前桥梁的BCI分数更低,更新最差的桥梁ID和其BCI分数。
-
-    #4. 循环结束后,返回已知的最差的桥梁ID。
+    #   假设第一个桥梁ID为当前最差的桥梁,并获取其BCI分数。
+    #   对于每个ID,使用`get_bridge_condition`function获取其最新的BCI分数
+    #   也就是使用 get_bridge_condition 。
+    #   一个个比较所有的桥梁的bci然后找出最低的
+    #   sort()会有用
 
 
 def map_route(bridges: list[list], lat: float, lon: float,
               max_bridges: int, radius: int) -> list[int]:
     """
+    这个有点难 做好心理准备
+
     根据给定的起始位置、桥梁列表、最大桥梁数和半径，为桥梁绘制一条路径。
 
     Parameters:
@@ -167,33 +104,18 @@ def map_route(bridges: list[list], lat: float, lon: float,
 
     Returns:
     - route: 桥梁ID的列表,表示要遍历的路径。
+
+    为了大家更好的理解 我来讲个小故事：
+        你是一个管理员 你一开始站在lat lon的这个点 然后你像四周看去(radius)
+        看到了5座桥梁(打比方) 然后你找出了这里面最低bci的一个桥梁 然后走了过去
+        走到这个桥梁后 你拿出小本子记录下了这个桥梁的id
+        
+        然后你现在站在哪呢? 就是这个桥的lat和lon对吧 然后你用你现在的lat和lon
+        再向四周看去 然后.......
+
+        最后你获得了你走过的路线 也就是我们的这个小本子 这就是你要返回的东西
+
     """
-
-    # 1. 初始化一个空的路径列表，用于存放已选择的桥梁ID
-    # route = []
-
-    # 2. 使用给定的纬度、经度和半径，在未访问的桥梁中查找当前位置半径内的桥梁
-    # bridge_in_radius = ...
-
-    # 3. 创建一个while循环，只要路径上的桥梁数少于max_bridges并且仍然可以找到桥梁，就继续执行循环
-
-        # 4. 在当前半径内的桥梁中，找到BCI分数最低的桥梁ID
-        # next_bridge_id = ...
-
-        # 5. 将该桥梁ID添加到路径列表中
-        # route.append(...)
-
-        # 6. 使用桥梁ID查找具体的桥梁信息，以获取其位置
-        # next_bridge = ...
-
-        # 7. 更新当前的纬度和经度为选择的桥梁的位置
-        # lat, lon = ...
-
-        # 8. 再次查找新位置的半径内的桥梁
-        # bridge_in_radius = ...
-
-    # 9. 返回路径列表
-    # return route
 
 ################################################################################
 # Part 4 - Reading and cleaning raw data
@@ -219,16 +141,7 @@ def clean_span_data(raw_spans: str) -> list[float]:
     :param raw_spans: 原始的跨度数据,其格式在“Bridge Spans”部分中有描述。
     """
 
-    # 1. 创建一个空列表。
-    
-    # 2. 你需要查找格式为"(n)=m;"的子字符串,其中n是跨度的编号,m是跨度的长度。
-    # hit:所有的m都在 ‘=’ 和 ‘；’中间
-    
-    # 3. 对于每个找到的 跨度的长度 数据，提取出跨度的长度并将其转换为float。
-    
-    # 4. 将提取出的浮点数添加到步骤1中创建的列表中。
-    
-    # 5. 返回列表。
+    # hit:所有的东西都在 ‘=’ 和 ‘；’中间 可以去学一下split
     
 
 
